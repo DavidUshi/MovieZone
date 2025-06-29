@@ -9,6 +9,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 import { redirect } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toogle";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "@/components/ErrorFallback";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -39,6 +41,7 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 
+				<ErrorBoundary FallbackComponent={ErrorFallback}>
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
 					<header className="p-4 border-b m-2 flex items-center gap-2">
 					<svg
@@ -69,6 +72,7 @@ export default function RootLayout({
 					<main className="pl-5">{children}</main>
 				</div>
 				</ThemeProvider>
+				</ErrorBoundary>
 			</body>
 		</html>
 	);
