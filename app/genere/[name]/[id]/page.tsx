@@ -10,7 +10,7 @@ type Movies = {
 }
 
 async function fetchGenreMovies(id: number): Promise<Movies[]> {
-    const token = process.env.THDB_API_KEY;
+    const token = process.env.TMDB_API_KEY;
     const res = await fetch(`https://api.themoviedb.org/3/discover/movie?with_genres=${id}`, {
         headers: {
             Authorization: `Bearer ${token}`,

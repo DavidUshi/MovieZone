@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SafeRender } from "@/components/SafeRender";
 
-import { redirect } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toogle";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "@/components/ErrorFallback";
@@ -32,10 +32,7 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	async function search(formData: FormData) {
-		'use server'
-		redirect(`/search?q=${formData.get('q')}`);
-	  }
+	
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body
@@ -57,7 +54,7 @@ export default function RootLayout({
 							clipRule="evenodd"></path>
 					</svg>
 					<h1 className="text-xl font-bold">MZone</h1>
-					<form action={search} className="flex items-center flex-row gap-2 ml-2">
+					<form action="/search" method="GET" className="flex items-center flex-row gap-2 ml-2">
 					<Input placeholder="Search" name="q" />
 					<Button type="submit"><MagnifyingGlassIcon /></Button>
 					</form>
@@ -69,7 +66,11 @@ export default function RootLayout({
 
 				<div className="flex p-4">
 					<Sidebar />
-					<main className="pl-5">{children}</main>
+					
+						<main className="pl-5">
+							<SafeRender>{children}</SafeRender>
+						</main>
+					
 				</div>
 				</ThemeProvider>
 				</ErrorBoundary>

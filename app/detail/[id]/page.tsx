@@ -13,8 +13,10 @@ type Credits = {
 	profile_path: string;
 }
 
+import Link from "next/link";
+
 async function fetchMovie(id: string): Promise<Movies> {
-	const token = process.env.THDB_API_KEY;
+	const token = process.env.TMDB_API_KEY;
 	const res = await fetch(`https://api.themoviedb.org/3/movie/${id}`, {
 		headers: {
 			Authorization: `Bearer ${token}`,
@@ -30,7 +32,7 @@ async function fetchMovie(id: string): Promise<Movies> {
 }
 
 async function fetchCredit(id: string): Promise<Credits[]> {
-	const token = process.env.THDB_API_KEY;
+	const token = process.env.TMDB_API_KEY;
 	const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits`, {
 		headers: {
 			Authorization: `Bearer ${token}`,
@@ -61,7 +63,8 @@ export default async function Detail({ params }: { params: Promise<{ id: string 
 				<h2 className="mt-4 pb-2 mb-4 border-b font-semibold text-2xl">Cast</h2>
 				<div className="flex items-center flex-wrap gap-6">
 					{credit.map(cast => (
-						<div key={cast.id} className="w-[128px] text-center">
+						<Link key={cast.id}  href={`/person/${cast.id}`}>
+						<div className="w-[128px] text-center">
 							{cast.profile_path ? (
 								<img 
 									src={profile + cast.profile_path} 
@@ -74,7 +77,7 @@ export default async function Detail({ params }: { params: Promise<{ id: string 
 								</div>
 							)}
 							<b className="font-medium text-sm">{cast.name}</b>
-						</div>
+						</div></Link>
 					))}
 				</div>
 			</div> 

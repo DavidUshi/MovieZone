@@ -10,7 +10,7 @@ type Movies = {
 }
 
 async function fetchMovies(): Promise<Movies[]> {
-    const token = process.env.THDB_API_KEY;
+    const token = process.env.TMDB_API_KEY;
     const res = await fetch('https://api.themoviedb.org/3/movie/popular', {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -26,7 +26,7 @@ async function fetchMovies(): Promise<Movies[]> {
 }
 
 async function TrendingMovies(): Promise<Movies[]> {
-    const token = process.env.THDB_API_KEY;
+    const token = process.env.TMDB_API_KEY;
     const res = await fetch('https://api.themoviedb.org/3/trending/movie/day', {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -34,7 +34,7 @@ async function TrendingMovies(): Promise<Movies[]> {
     });
     
     if (!res.ok) {
-        throw new Error('Failed to fetch popular movies');
+        throw new Error('Failed to fetch trending movies');
     }
     
     const data = await res.json();
